@@ -36,7 +36,7 @@ async function main() {
  await prisma.team.update({
     where: {id:2},
     data: {
-      players: {
+      player: {
       connect:[
       {id: 1},
       {id: 4},
