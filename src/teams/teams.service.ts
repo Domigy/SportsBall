@@ -8,7 +8,7 @@ export class TeamsService {
   [x: string]: any;
   constructor(private readonly db: PrismaService){}
   create(createTeamDto: CreateTeamDto) {
-    return 'This action adds a new team';
+    return this.db.team.create({data: createTeamDto});
   }
   findAllPlayers(){
     return this.db.team.findMany({where: {player: {some: {}}}, include: {player: true}})
@@ -22,14 +22,19 @@ export class TeamsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} team`;
+    return this.db.team.findUnique({where: {id}});
   }
 
   update(id: number, updateTeamDto: UpdateTeamDto) {
     return `This action updates a #${id} team`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} team`;
+  async remove(id: number) {
+    try{
+      return await this.db.team.delete({where: {id}});
+    }catch{
+      return undefined;
+    }
+    
   }
 }
